@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>School Canteen</title>
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="nav-logo">BEA Canteen</div>
+  <ul class="nav-links">
+    <li>About</li>
+    <li>Services</li>
+    <li>Help</li>
+    <li>Contact</li>
+  </ul>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+
+  <h2>Food Menu</h2>
+
+  <form action="checkout.html">
+
+    <!-- FOOD ITEM -->
+<div class="container">
+
+  <form action="checkout.html">
+
+    <div class="food-item">
+      <input type="checkbox" id="adobo">
+      <img src="adobo.jpg" alt="Adobo">
+      <label for="adobo">Adobo</label>
+      <span class="price">₱40.00</span>
+      <div class="qty-box">
+        <label>Quantity:</label>
+        <select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="food-item">
+      <input type="checkbox" id="friedchicken">
+      <img src="friedchicken.jpg" alt="Fried Chicken">
+      <label for="friedchicken">Fried Chicken</label>
+      <span class="price">₱30.00</span>
+      <div class="qty-box">
+        <label>Quantity:</label>
+        <select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="food-item">
+      <input type="checkbox" id="hotdog">
+      <img src="hotdog.jpg" alt="Hotdog">
+      <label for="hotdog">Hotdog</label>
+      <span class="price">₱20.00</span>
+      <div class="qty-box">
+        <label>Quantity:</label>
+        <select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="food-item">
+      <input type="checkbox" id="maling">
+      <img src="maling.jpg" alt="Maling">
+      <label for="maling">Maling</label>
+      <span class="price">₱20.00</span>
+      <div class="qty-box">
+        <label>Quantity:</label>
+        <select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="food-item">
+      <input type="checkbox" id="friedegg">
+      <img src="friedegg.jpg" alt="Fried Egg">
+      <label for="friedegg">Fried Egg</label>
+      <span class="price">₱20.00</span>
+      <div class="qty-box">
+        <label>Quantity:</label>
+        <select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="food-item">
+      <input type="checkbox" id="Rice">
+      <img src="rice.jpg" alt="Rice">
+      <label for="Rice">Rice</label>
+      <span class="price">₱15.00</span>
+      <div class="qty-box">
+        <label>Quantity:</label>
+        <select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="food-item">
+      <input type="checkbox" id="chaofan">
+      <img src="chaofan.jpg" alt="Chaofan">
+      <label for="chaofan">Chaofan</label>
+      <span class="price">₱25.00</span>
+      <div class="qty-box">
+        <label>Quantity:</label>
+        <select>
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- ORDER SUMMARY -->
+  
+<div class="summary">
+  <h3>Your Selection</h3>
+  <div id="summary-list">
+    </div>
+  <hr>
+  <div style="display: flex; justify-content: space-between; font-weight: bold; margin-top: 10px;">
+    <span>Total:</span>
+    <span id="total-price">₱0.00</span>
+  </div>
+</div>
+
+<!-- MODE OF PAYMENT -->
+<div class="payment-section">
+  <h3>Mode of Payment</h3>
+
+  <!-- CASH -->
+  <label class="payment-option">
+    <input type="radio" name="payment" required>
+    Cash
+  </label>
+
+  <!-- ONLINE PAYMENT -->
+  <div class="online-payment">
+    <label class="payment-option">
+      <input type="radio" name="payment">
+      Online Payment
+    </label>
+
+    <div class="online-options">
+      <label class="online-item">
+        <input type="radio" name="payment">
+        <img src="gcash.jpg" alt="GCash">
+        GCash
+      </label>
+
+      <label class="online-item">
+        <input type="radio" name="payment">
+        <img src="maya.jpg" alt="Maya">
+        Maya
+      </label>
+    </div>
+  </div>
+</div>
+
+
+    <!-- CHECKOUT BUTTON -->
+    <button type="submit" class="checkout-btn">
+      CHECK OUT
+    </button>
+
+  </form>
+
+</div>
+<script>
+  const checkboxes = document.querySelectorAll('.food-item input[type="checkbox"]');
+  const summaryList = document.getElementById('summary-list');
+  const totalPriceElement = document.getElementById('total-price');
+
+  function updateSummary() {
+    let total = 0;
+    summaryList.innerHTML = ""; // Clear list
+
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        const parent = checkbox.closest('.food-item');
+        const name = parent.querySelector('label').innerText;
+        const priceStr = parent.querySelector('.price').innerText;
+        const price = parseFloat(priceStr.replace('₱', ''));
+        const qty = parseInt(parent.querySelector('select').value);
+        
+        const itemTotal = price * qty;
+        total += itemTotal;
+
+        // Add item to summary display
+        const p = document.createElement('p');
+        p.style.fontSize = "14px";
+        p.style.margin = "5px 0";
+        p.innerHTML = `• ${name} x${qty} <span style="float:right;">₱${itemTotal.toFixed(2)}</span>`;
+        summaryList.appendChild(p);
+      }
+    });
+
+    totalPriceElement.innerText = `₱${total.toFixed(2)}`;
+  }
+
+  // Listen for checkbox or quantity changes
+  document.addEventListener('change', (e) => {
+    if (e.target.type === 'checkbox' || e.target.tagName === 'SELECT') {
+      updateSummary();
+    }
+  });
+</script>
+
+</body>
+</html>
