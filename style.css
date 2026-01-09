@@ -138,15 +138,6 @@ body {
   padding: 10px 0;
 }
 
-.online-qr {
-  display: none;
-  text-align: center;
-  margin-top: 10px;
-}
-#online-trigger:checked ~ .online-qr {
-  display: block !important;
-  margin-top: 15px;
-}
 /* SERVICE SELECTION STYLES */
 .service-selection {
   margin-bottom: 20px;

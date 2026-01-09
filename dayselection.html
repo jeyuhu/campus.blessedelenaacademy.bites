@@ -58,12 +58,10 @@
 
 <script>
   function selectDay(day) {
-    // Save the day so the index page knows what to show
     localStorage.setItem("selectedOrderDay", day);
     window.location.href = "index.html";
   }
 
-  // Gatekeeper: Make sure they are logged in
   window.onload = function() {
     if (!localStorage.getItem("isLoggedIn")) {
       window.location.href = "login.html";

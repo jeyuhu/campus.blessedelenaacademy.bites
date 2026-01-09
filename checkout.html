@@ -26,6 +26,7 @@
   </div>
 </nav>
 
+
 <div class="container">
 
   <h2>Order Complete</h2>
@@ -47,15 +48,6 @@
 </button>
 </div>
 
-  <!-- QR PLACEHOLDER -->
-  <div class="qr-box">
-    <div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div>
-    <div></div><div></div><div></div><div></div><div></div>
-  </div>
-
 </div>
 <div class="container" style="text-align: center; margin-top: 20px;">
   <h3>How was your food?</h3>
@@ -69,83 +61,48 @@
     <a href="index.html" style="color: #ff8c69; font-size: 14px;">Back to Menu</a>
   </p>
 </div>
+
 <script>
-   window.addEventListener('load', function() {
-    const name = localStorage.getItem("studentName");
+window.onload = function() {
+    // 1. SECURE DATA RETRIEVAL
+    const name = localStorage.getItem("studentName") || "Guest";
     const isLoggedIn = localStorage.getItem("isLoggedIn");
-    const displayName = document.getElementById("display-name");
+    const orderData = JSON.parse(localStorage.getItem("latestOrder")) || [];
+    const totalData = localStorage.getItem("latestTotal") || "₱0.00";
 
-    // Protection: If not logged in, kick back to login page
-    // (We skip this check if we are already on login.html)
-    if (!isLoggedIn && !window.location.href.includes("login.html")) {
+    // 2. GATEKEEPER
+    if (!isLoggedIn) {
         window.location.href = "login.html";
+        return;
     }
+    
+    // 3. UPDATE UI
+    document.getElementById("display-name").innerText = name;
+    
+    const receiptContainer = document.getElementById("receipt-items");
+    const totalDisplay = document.getElementById("receipt-total");
 
-    // Update the name in the navbar if the element exists
-    if (displayName && name) {
-        displayName.innerText = name;
+    if (orderData.length > 0) {
+        receiptContainer.innerHTML = ""; // Clear wait/placeholder
+        orderData.forEach(item => {
+            const p = document.createElement("p");
+            p.className = "receipt-row";
+            p.innerHTML = `<strong>${item.qty}x</strong> ${item.name} <span>${item.price}</span>`;
+            receiptContainer.appendChild(p);
+        });
+        totalDisplay.innerText = totalData;
+    } else {
+        receiptContainer.innerHTML = "<p>No items found in current order.</p>";
     }
-});
-// 2. Universal Logout Function
+};
+
 function logout() {
-    localStorage.clear(); // Clear all session data (name, login status, order)
+    localStorage.clear();
     window.location.href = "login.html";
 }
-  // Login Gatekeeper
-  window.onload = function() {
-    // 1. Check if the 'isLoggedIn' key exists in the browser storage
-    const loggedIn = localStorage.getItem("isLoggedIn");
-
-    // 2. If it's not there, redirect to login.html immediately
-    if (!loggedIn) {
-        window.location.href = "login.html";
-    } else {
-        // Optional: Display the student's name if they are logged in
-        const name = localStorage.getItem("studentName");
-        document.getElementById("display-name").innerText = name || "Student";
-    }
-  };  
-const form = document.querySelector('form');
-window.onload = function() {
-    // 1. Get the data saved by the index page
-    const orderData = JSON.parse(localStorage.getItem("latestOrder"));
-    const totalData = localStorage.getItem("latestTotal");
-    const receiptContainer = document.getElementById("receipt-items");
-
-    // 2. If data exists, display it
-    if (orderData && orderData.length > 0) {
-        receiptContainer.innerHTML = ""; // Clear the "No items" message
-        orderData.forEach(item => {
-            const p = document.createElement("p");
-            p.style.margin = "8px 0";
-            p.style.fontSize = "14px";
-            p.innerHTML = `<strong>${item.qty}x</strong> ${item.name} <span style="float:right;">${item.price}</span>`;
-            receiptContainer.appendChild(p);
-        });
-        document.getElementById("receipt-total").innerText = totalData;
-    } else {
-        receiptContainer.innerHTML = "<p>No items selected.</p>";
-    }
-};
-window.onload = function() {
-    const orderData = JSON.parse(localStorage.getItem("latestOrder"));
-    const totalData = localStorage.getItem("latestTotal");
-    const receiptContainer = document.getElementById("receipt-items");
-
-    if (orderData && orderData.length > 0) {
-        orderData.forEach(item => {
-            const p = document.createElement("p");
-            p.style.margin = "8px 0";
-            p.style.fontSize = "14px";
-            p.innerHTML = `<strong>${item.qty}x</strong> ${item.name} <span style="float:right;">${item.price}</span>`;
-            receiptContainer.appendChild(p);
-        });
-        document.getElementById("receipt-total").innerText = totalData;
-    } else {
-        receiptContainer.innerHTML = "<p>No items found.</p>";
-    }
-};
 </script>
-
 </body>
+<footer style="text-align: center; padding: 20px; opacity: 0.5;">
+  <a href="admin.html" style="font-size: 10px; color: #666; text-decoration: none;">Admin Login</a>
+</footer>
 </html>

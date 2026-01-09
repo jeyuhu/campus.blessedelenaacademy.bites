@@ -39,7 +39,6 @@
 </div>
 
 <script>
-  // Live Preview Logic
   document.getElementById('foodPhoto').addEventListener('change', function() {
     const file = this.files[0];
     const previewImg = document.getElementById('inner-preview');
@@ -54,7 +53,6 @@
     }
   });
 
-  // Submit and Redirect Logic
   document.getElementById('reviewForm').addEventListener('submit', function(e) {
     e.preventDefault();
     const file = document.getElementById('foodPhoto').files[0];

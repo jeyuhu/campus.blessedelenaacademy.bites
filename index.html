@@ -172,13 +172,10 @@
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const displayName = document.getElementById("display-name");
 
-    // Protection: If not logged in, kick back to login page
-    // (We skip this check if we are already on login.html)
     if (!isLoggedIn && !window.location.href.includes("login.html")) {
         window.location.href = "login.html";
     }
 
-    // Update the name in the navbar if the element exists
     if (displayName && name) {
         displayName.innerText = name;
     }
@@ -186,78 +183,81 @@
 
 // 2. Universal Logout Function
 function logout() {
-    localStorage.clear(); // Clear all session data (name, login status, order)
+    localStorage.clear();
     window.location.href = "login.html";
 }
   // Login Gatekeeper
   window.onload = function() {
-    // 1. Check if the 'isLoggedIn' key exists in the browser storage
+    
     const loggedIn = localStorage.getItem("isLoggedIn");
 
-    // 2. If it's not there, redirect to login.html immediately
+    
     if (!loggedIn) {
         window.location.href = "login.html";
     } else {
-        // Optional: Display the student's name if they are logged in
+   
         const name = localStorage.getItem("studentName");
         document.getElementById("display-name").innerText = name || "Student";
     }
 };
-  // Price Calculator
-  const form = document.querySelector('form');
-  form.addEventListener('change', () => {
-    let total = 0;
+  // 2. PRICE CALCULATOR LOGIC
+    const form = document.querySelector('form');
     const summaryList = document.getElementById('summary-list');
-    summaryList.innerHTML = "";
-    
-    document.querySelectorAll('.food-item').forEach(item => {
-      const checkbox = item.querySelector('input[type="checkbox"]');
-      if (checkbox.checked) {
-        const name = item.querySelector('label').innerText;
-        const price = parseFloat(item.querySelector('.price').innerText.replace('₱', ''));
-        const qty = parseInt(item.querySelector('select').value);
-        const itemTotal = price * qty;
-        total += itemTotal;
+    const totalPriceDisplay = document.getElementById('total-price');
 
-        summaryList.innerHTML += `<p style="font-size:14px; margin:5px 0;">• ${name} x${qty} <span style="float:right;">₱${itemTotal.toFixed(2)}</span></p>`;
-      }
+    
+    form.addEventListener('input', () => {
+        let total = 0;
+        summaryList.innerHTML = "";
+        
+        document.querySelectorAll('.food-item').forEach(item => {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            const select = item.querySelector('select');
+            
+            if (checkbox.checked) {
+                const foodName = item.querySelector('label').innerText;
+                const priceText = item.querySelector('.price').innerText;
+                const price = parseFloat(priceText.replace('₱', ''));
+                const qty = parseInt(select.value);
+                const itemTotal = price * qty;
+                
+                total += itemTotal;
+
+                
+                summaryList.innerHTML += `
+                    <p style="font-size:14px; margin:5px 0;">
+                        • ${foodName} x${qty} 
+                        <span style="float:right;">₱${itemTotal.toFixed(2)}</span>
+                    </p>`;
+            }
+        });
+        totalPriceDisplay.innerText = `₱${total.toFixed(2)}`;
     });
-    document.getElementById('total-price').innerText = `₱${total.toFixed(2)}`;
-  });
-
-// ... your other code (price calculator, etc.) ...
-
   function logout() {
-    // 1. Delete the login status
     localStorage.clear();
-    
-    // 2. Redirect the user back to the login page immediately
     window.location.href = "login.html";
   }
-  // This function captures the data BEFORE the page changes
 const orderForm = document.querySelector('form');
 orderForm.addEventListener('submit', () => {
     let orderedItems = [];
-    // Get the total text (e.g., "₱40.00")
     let total = document.getElementById('total-price').innerText;
-
-    // Look through every food item to see what is checked
+    let serviceTime = document.querySelector('select[name="service_time"]').value;
     document.querySelectorAll('.food-item').forEach(item => {
-        const checkbox = item.querySelector('input[type="checkbox"]');
-        if (checkbox.checked) {
-            const name = item.querySelector('label').innerText;
-            const qty = item.querySelector('select').value;
-            const price = item.querySelector('.price').innerText;
-            orderedItems.push({ name, qty, price });
+        const checkbox = item.querySelector('input[type="checkbox"]'); // Fixed line
+        if (checkbox && checkbox.checked) {
+            orderedItems.push({
+                name: item.querySelector('label').innerText,
+                qty: item.querySelector('select').value,
+                price: item.querySelector('.price').innerText
+            });
         }
     });
 
-    // Save the list and the total to localStorage
     localStorage.setItem("latestOrder", JSON.stringify(orderedItems));
     localStorage.setItem("latestTotal", total);
+    localStorage.setItem("latestServiceTime", serviceTime);
 });
 window.onload = function() {
-    // Check login status
     const name = localStorage.getItem("studentName");
     if (!localStorage.getItem("isLoggedIn")) {
         window.location.href = "login.html";
@@ -265,11 +265,13 @@ window.onload = function() {
         document.getElementById("display-name").innerText = name;
     }
 };
-
 function logout() {
     localStorage.clear();
     window.location.href = "login.html";
 }
 </script>
 </body>
+<footer style="text-align: center; padding: 20px; opacity: 0.5;">
+  <a href="admin.html" style="font-size: 10px; color: #666; text-decoration: none;">Admin Login</a>
+</footer>
 </html>
