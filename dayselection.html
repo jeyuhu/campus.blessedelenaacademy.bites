@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Select Day - BEA Canteen</title>
+  <link rel="icon" type="image/png" href="bealogo.png">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .day-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 20px;
+    }
+    .day-btn {
+      padding: 20px;
+      background: white;
+      border: 2px solid #ff8c69;
+      border-radius: 10px;
+      font-weight: bold;
+      color: #333;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-size: 16px;
+    }
+    .day-btn:hover {
+      background: #ff8c69;
+      color: white;
+    }
+    .day-btn.weekend {
+      grid-column: span 2;
+      background: #eee;
+      border-color: #ccc;
+      color: #888;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-logo">BEA Canteen</div>
+</nav>
+
+<div class="container" style="text-align: center;">
+  <h2>Select Order Day</h2>
+  <p>Which day would you like to order for?</p>
+
+  <div class="day-grid">
+    <button class="day-btn" onclick="selectDay('Monday')">Monday</button>
+    <button class="day-btn" onclick="selectDay('Tuesday')">Tuesday</button>
+    <button class="day-btn" onclick="selectDay('Wednesday')">Wednesday</button>
+    <button class="day-btn" onclick="selectDay('Thursday')">Thursday</button>
+    <button class="day-btn" onclick="selectDay('Friday')">Friday</button>
+    <button class="day-btn weekend" disabled>Weekend (Closed)</button>
+  </div>
+</div>
+
+<script>
+  function selectDay(day) {
+    // Save the day so the index page knows what to show
+    localStorage.setItem("selectedOrderDay", day);
+    window.location.href = "index.html";
+  }
+
+  // Gatekeeper: Make sure they are logged in
+  window.onload = function() {
+    if (!localStorage.getItem("isLoggedIn")) {
+      window.location.href = "login.html";
+    }
+  }
+</script>
+
+</body>
+</html> 

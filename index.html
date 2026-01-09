@@ -5,11 +5,20 @@
   <title>School Canteen</title>
 	<link rel="icon" type="image/png" href="bealogo.png">
   <link rel="stylesheet" href="style.css">
+   <script src="https://unpkg.com/html5-qrcode"></script>
 </head>
 <body>
 
 <nav class="navbar">
-  <div class="nav-logo">BEA Canteen</div>
+  <div class="nav-logo" onclick="window.location.href='index.html'" style="cursor:pointer;">BEA Canteen</div>
+  <ul class="nav-links" style="list-style:none; display:flex; gap:15px; font-size:13px; align-items:center;">
+    <li onclick="window.location.href='about.html'" style="cursor:pointer;">About</li>
+    <li onclick="window.location.href='service.html'" style="cursor:pointer;">Services</li>
+    <li onclick="window.location.href='help.html'" style="cursor:pointer;">Help</li>
+    <li onclick="window.location.href='contact.html'" style="cursor:pointer;">Contact</li>
+    <li onclick="window.location.href='dayselection.html'" style="cursor:pointer;">Change Day</li>
+    <li onclick="window.location.href='reviewpage.html'" style="cursor:pointer;">Reviews</li>
+  </ul>
   <div class="user-profile">
     <img src="speedpfp.jpg" class="profile-icon">
     <span id="display-name">Guest</span>
@@ -19,6 +28,10 @@
 
 <div class="container">
   <h2>Food Menu</h2>
+  <div style="text-align: center; margin-bottom: 10px;">
+    <span id="current-day-display" style="background: #ff8c69; color: white; padding: 3px 10px; border-radius: 15px; font-size: 12px; font-weight: bold;">
+      Day: Loading...
+    </span>
   <form action="checkout.html">
 
     <div class="food-item">
@@ -128,6 +141,12 @@
       <img src="maya.jpg" alt="Maya"> Maya
     </label>
   </div>
+    <div class="payment-number">
+      <label class="payment-label" for="payment-id">Enter GCash/Maya Number:</label>
+      <input type="text" id="payment-id" name="payment-id" placeholder="09XXXXXXXXX" style="width: 100%; padding: 8px; margin-top: 5px; border: 1px solid #ccc; border-radius: 4px;">
+    </div>
+</div>    
+
 
 <div class="service-selection" style="margin-top: 20px; padding: 10px; background: #f0f7ff; border-radius: 5px; border: 1px solid #d0e3ff;">
   <h3 style="font-size: 16px; margin-bottom: 8px;">Service Time</h3>
@@ -147,6 +166,29 @@
 </div>
 
 <script>
+
+  window.addEventListener('load', function() {
+    const name = localStorage.getItem("studentName");
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const displayName = document.getElementById("display-name");
+
+    // Protection: If not logged in, kick back to login page
+    // (We skip this check if we are already on login.html)
+    if (!isLoggedIn && !window.location.href.includes("login.html")) {
+        window.location.href = "login.html";
+    }
+
+    // Update the name in the navbar if the element exists
+    if (displayName && name) {
+        displayName.innerText = name;
+    }
+});
+
+// 2. Universal Logout Function
+function logout() {
+    localStorage.clear(); // Clear all session data (name, login status, order)
+    window.location.href = "login.html";
+}
   // Login Gatekeeper
   window.onload = function() {
     // 1. Check if the 'isLoggedIn' key exists in the browser storage
@@ -192,6 +234,42 @@
     // 2. Redirect the user back to the login page immediately
     window.location.href = "login.html";
   }
+  // This function captures the data BEFORE the page changes
+const orderForm = document.querySelector('form');
+orderForm.addEventListener('submit', () => {
+    let orderedItems = [];
+    // Get the total text (e.g., "₱40.00")
+    let total = document.getElementById('total-price').innerText;
+
+    // Look through every food item to see what is checked
+    document.querySelectorAll('.food-item').forEach(item => {
+        const checkbox = item.querySelector('input[type="checkbox"]');
+        if (checkbox.checked) {
+            const name = item.querySelector('label').innerText;
+            const qty = item.querySelector('select').value;
+            const price = item.querySelector('.price').innerText;
+            orderedItems.push({ name, qty, price });
+        }
+    });
+
+    // Save the list and the total to localStorage
+    localStorage.setItem("latestOrder", JSON.stringify(orderedItems));
+    localStorage.setItem("latestTotal", total);
+});
+window.onload = function() {
+    // Check login status
+    const name = localStorage.getItem("studentName");
+    if (!localStorage.getItem("isLoggedIn")) {
+        window.location.href = "login.html";
+    } else if (document.getElementById("display-name")) {
+        document.getElementById("display-name").innerText = name;
+    }
+};
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
+}
 </script>
 </body>
 </html>

@@ -10,13 +10,20 @@
 <body>
 
 <nav class="navbar">
-  <div class="nav-logo">School Canteen</div>
-  <ul class="nav-links">
-    <li>About</li>
-    <li>Services</li>
-    <li>Help</li>
-    <li>Contact</li>
+  <div class="nav-logo" onclick="window.location.href='index.html'" style="cursor:pointer;">BEA Canteen</div>
+  <ul class="nav-links" style="list-style:none; display:flex; gap:15px; font-size:13px; align-items:center;">
+    <li onclick="window.location.href='about.html'" style="cursor:pointer;">About</li>
+    <li onclick="window.location.href='service.html'" style="cursor:pointer;">Services</li>
+    <li onclick="window.location.href='help.html'" style="cursor:pointer;">Help</li>
+    <li onclick="window.location.href='contact.html'" style="cursor:pointer;">Contact</li>
+    <li onclick="window.location.href='dayselection.html'" style="cursor:pointer;">Change Day</li>
+    <li onclick="window.location.href='reviewpage.html'" style="cursor:pointer;">Reviews</li>
   </ul>
+  <div class="user-profile">
+    <img src="speedpfp.jpg" class="profile-icon">
+    <span id="display-name">Guest</span>
+    <button onclick="logout()" class="logout-link">Logout</button>
+  </div>
 </nav>
 
 <div class="container">
@@ -27,6 +34,18 @@
     Your order is complete.<br>
     Please claim your food at the canteen.
   </p>
+  <div id="order-receipt" style="background: #fffdf5; padding: 15px; border: 1px solid #eee; border-radius: 8px; margin-bottom: 20px;">
+  <h3 style="border-bottom: 2px solid #ff8c69; padding-bottom: 5px; margin-bottom: 10px;">Order Details</h3>
+  <div id="receipt-items">
+    </div>
+  <div style="display: flex; justify-content: space-between; font-weight: bold; margin-top: 10px; font-size: 1.1em;">
+    <span>TOTAL PAID:</span>
+    <span id="receipt-total" style="color: #2c7a2c;">₱0.00</span>
+  </div>
+  <button onclick="window.print()" class="checkout-btn" style="background: #4A90E2; margin-bottom: 10px;">
+  SAVE RECEIPT (PDF)
+</button>
+</div>
 
   <!-- QR PLACEHOLDER -->
   <div class="qr-box">
@@ -38,90 +57,94 @@
   </div>
 
 </div>
-<div class="container review-section">
-  <h2>Rate Your Meal</h2>
-  <form id="reviewForm" enctype="multipart/form-data">
-    <div class="star-rating">
-      <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
-      <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
-      <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
-      <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
-      <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
-    </div>
-
-    <nav class="navbar">
-  <div class="nav-logo">BEA Canteen</div>
-  <ul class="nav-links" style="list-style:none; display:flex; gap:15px; font-size:13px;">
-    <li onclick="window.location.href='index.html'">Menu</li>
-    <li onclick="document.getElementById('review-section').scrollIntoView()">Rate Us</li>
-  </ul>
-  ...
-</nav>
-
-    <textarea id="feedbackText" placeholder="How was your meal? Tell us more..." required></textarea>
-
-   <div class="container review-section">
-  <h2>Rate Your Meal</h2>
-  <form id="reviewForm" enctype="multipart/form-data">
-    <div class="file-upload">
-  <label for="foodPhoto" class="file-label">
-    <span>📸 Attach a photo</span>
-    <input type="file" id="foodPhoto" accept="image/*">
-  </label>
-  <div id="file-name-display">No file chosen</div>
+<div class="container" style="text-align: center; margin-top: 20px;">
+  <h3>How was your food?</h3>
+  <p style="font-size: 14px; color: #666; margin-bottom: 15px;">We'd love to hear your feedback!</p>
   
-  <img id="inner-preview" src="" style="display:none; width:100%; max-width:180px; margin-top:10px; border-radius:8px; border:1px solid #ddd;">
-</div>
-
-    <button type="submit" class="checkout-btn">Submit Review</button>
-  </form>
+  <button onclick="window.location.href='reviewpage.html'" class="checkout-btn" style="background: #4A90E2;">
+    REVIEW ORDER
+  </button>
+  
+  <p style="margin-top: 20px;">
+    <a href="index.html" style="color: #ff8c69; font-size: 14px;">Back to Menu</a>
+  </p>
 </div>
 <script>
-// Function to show the image preview inside the box immediately
-document.getElementById('foodPhoto').addEventListener('change', function() {
-  const file = this.files[0];
-  const fileNameDisplay = document.getElementById('file-name-display');
-  const previewImg = document.getElementById('inner-preview');
+   window.addEventListener('load', function() {
+    const name = localStorage.getItem("studentName");
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const displayName = document.getElementById("display-name");
 
-  if (file) {
-    fileNameDisplay.innerText = file.name;
+    // Protection: If not logged in, kick back to login page
+    // (We skip this check if we are already on login.html)
+    if (!isLoggedIn && !window.location.href.includes("login.html")) {
+        window.location.href = "login.html";
+    }
 
-    const reader = new FileReader();
-    reader.onload = function(e) {
-      previewImg.src = e.target.result;
-      previewImg.style.display = "block"; // Make the image visible
-    };
-    reader.readAsDataURL(file);
-  } else {
-    fileNameDisplay.innerText = "No file chosen";
-    previewImg.style.display = "none"; // Hide if no file is selected
-  }
+    // Update the name in the navbar if the element exists
+    if (displayName && name) {
+        displayName.innerText = name;
+    }
 });
+// 2. Universal Logout Function
+function logout() {
+    localStorage.clear(); // Clear all session data (name, login status, order)
+    window.location.href = "login.html";
+}
+  // Login Gatekeeper
+  window.onload = function() {
+    // 1. Check if the 'isLoggedIn' key exists in the browser storage
+    const loggedIn = localStorage.getItem("isLoggedIn");
 
-// Your existing submit code remains the same to handle the redirect
-document.getElementById('reviewForm').addEventListener('submit', function(e) {
-  e.preventDefault();
-  
-  const rating = document.querySelector('input[name="rating"]:checked');
-  const fileInput = document.getElementById('foodPhoto');
-  const file = fileInput.files[0];
+    // 2. If it's not there, redirect to login.html immediately
+    if (!loggedIn) {
+        window.location.href = "login.html";
+    } else {
+        // Optional: Display the student's name if they are logged in
+        const name = localStorage.getItem("studentName");
+        document.getElementById("display-name").innerText = name || "Student";
+    }
+  };  
+const form = document.querySelector('form');
+window.onload = function() {
+    // 1. Get the data saved by the index page
+    const orderData = JSON.parse(localStorage.getItem("latestOrder"));
+    const totalData = localStorage.getItem("latestTotal");
+    const receiptContainer = document.getElementById("receipt-items");
 
-  if (!rating) {
-    alert("Please select a star rating!");
-    return;
-  }
+    // 2. If data exists, display it
+    if (orderData && orderData.length > 0) {
+        receiptContainer.innerHTML = ""; // Clear the "No items" message
+        orderData.forEach(item => {
+            const p = document.createElement("p");
+            p.style.margin = "8px 0";
+            p.style.fontSize = "14px";
+            p.innerHTML = `<strong>${item.qty}x</strong> ${item.name} <span style="float:right;">${item.price}</span>`;
+            receiptContainer.appendChild(p);
+        });
+        document.getElementById("receipt-total").innerText = totalData;
+    } else {
+        receiptContainer.innerHTML = "<p>No items selected.</p>";
+    }
+};
+window.onload = function() {
+    const orderData = JSON.parse(localStorage.getItem("latestOrder"));
+    const totalData = localStorage.getItem("latestTotal");
+    const receiptContainer = document.getElementById("receipt-items");
 
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function(event) {
-        localStorage.setItem("latestReviewPhoto", event.target.result);
-        window.location.href = "thankyoureview.html";
-    };
-    reader.readAsDataURL(file);
-  } else {
-    window.location.href = "thankyoureview.html";
-  }
-});
+    if (orderData && orderData.length > 0) {
+        orderData.forEach(item => {
+            const p = document.createElement("p");
+            p.style.margin = "8px 0";
+            p.style.fontSize = "14px";
+            p.innerHTML = `<strong>${item.qty}x</strong> ${item.name} <span style="float:right;">${item.price}</span>`;
+            receiptContainer.appendChild(p);
+        });
+        document.getElementById("receipt-total").innerText = totalData;
+    } else {
+        receiptContainer.innerHTML = "<p>No items found.</p>";
+    }
+};
 </script>
 
 </body>

@@ -2,9 +2,11 @@
 
 body {
   min-height: 100vh;
-  background: url("bealogo.png") no-repeat center center fixed;
-  background-size: contain;
-  background-color: #f4f4f4;
+  background-color: #661f1f;
+  background:
+    url("bealogo.png") no-repeat center fixed,
+    radial-gradient(circle, hsl(0, 54%, 40%), #180606);
+  background-size: 550px 550px, cover;
 }
 
 .navbar {
@@ -122,6 +124,29 @@ body {
   padding: 10px 0;
 }
 
+.payment-number {
+  display: none;
+  margin-top: 8px;
+  padding: 8px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+#online-trigger:checked ~ .payment-number {
+  display: block !important;
+  padding: 10px 0;
+}
+
+.online-qr {
+  display: none;
+  text-align: center;
+  margin-top: 10px;
+}
+#online-trigger:checked ~ .online-qr {
+  display: block !important;
+  margin-top: 15px;
+}
 /* SERVICE SELECTION STYLES */
 .service-selection {
   margin-bottom: 20px;
@@ -216,4 +241,19 @@ textarea {
   height: 100%;
   opacity: 0; /* Keeps it invisible but makes the whole box clickable */
   cursor: pointer;
+}
+.nav-links li {
+  color: #555;
+  font-weight: 500;
+  transition: 0.2s;
+}
+
+.nav-links li:hover {
+  color: #ff8c69; /* Theme Orange */
+}
+
+.navbar {
+  position: sticky; /* Keeps navbar at the top when scrolling */
+  top: 0;
+  z-index: 1000;
 }
