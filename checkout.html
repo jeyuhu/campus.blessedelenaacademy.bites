@@ -38,6 +38,91 @@
   </div>
 
 </div>
+<div class="container review-section">
+  <h2>Rate Your Meal</h2>
+  <form id="reviewForm" enctype="multipart/form-data">
+    <div class="star-rating">
+      <input type="radio" id="star5" name="rating" value="5"><label for="star5">★</label>
+      <input type="radio" id="star4" name="rating" value="4"><label for="star4">★</label>
+      <input type="radio" id="star3" name="rating" value="3"><label for="star3">★</label>
+      <input type="radio" id="star2" name="rating" value="2"><label for="star2">★</label>
+      <input type="radio" id="star1" name="rating" value="1"><label for="star1">★</label>
+    </div>
+
+    <nav class="navbar">
+  <div class="nav-logo">BEA Canteen</div>
+  <ul class="nav-links" style="list-style:none; display:flex; gap:15px; font-size:13px;">
+    <li onclick="window.location.href='index.html'">Menu</li>
+    <li onclick="document.getElementById('review-section').scrollIntoView()">Rate Us</li>
+  </ul>
+  ...
+</nav>
+
+    <textarea id="feedbackText" placeholder="How was your meal? Tell us more..." required></textarea>
+
+   <div class="container review-section">
+  <h2>Rate Your Meal</h2>
+  <form id="reviewForm" enctype="multipart/form-data">
+    <div class="file-upload">
+  <label for="foodPhoto" class="file-label">
+    <span>📸 Attach a photo</span>
+    <input type="file" id="foodPhoto" accept="image/*">
+  </label>
+  <div id="file-name-display">No file chosen</div>
+  
+  <img id="inner-preview" src="" style="display:none; width:100%; max-width:180px; margin-top:10px; border-radius:8px; border:1px solid #ddd;">
+</div>
+
+    <button type="submit" class="checkout-btn">Submit Review</button>
+  </form>
+</div>
+<script>
+// Function to show the image preview inside the box immediately
+document.getElementById('foodPhoto').addEventListener('change', function() {
+  const file = this.files[0];
+  const fileNameDisplay = document.getElementById('file-name-display');
+  const previewImg = document.getElementById('inner-preview');
+
+  if (file) {
+    fileNameDisplay.innerText = file.name;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      previewImg.src = e.target.result;
+      previewImg.style.display = "block"; // Make the image visible
+    };
+    reader.readAsDataURL(file);
+  } else {
+    fileNameDisplay.innerText = "No file chosen";
+    previewImg.style.display = "none"; // Hide if no file is selected
+  }
+});
+
+// Your existing submit code remains the same to handle the redirect
+document.getElementById('reviewForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  
+  const rating = document.querySelector('input[name="rating"]:checked');
+  const fileInput = document.getElementById('foodPhoto');
+  const file = fileInput.files[0];
+
+  if (!rating) {
+    alert("Please select a star rating!");
+    return;
+  }
+
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(event) {
+        localStorage.setItem("latestReviewPhoto", event.target.result);
+        window.location.href = "thankyoureview.html";
+    };
+    reader.readAsDataURL(file);
+  } else {
+    window.location.href = "thankyoureview.html";
+  }
+});
+</script>
 
 </body>
 </html>

@@ -141,3 +141,79 @@ body {
   outline: none;
   border-color: #ff8c69; /* Matches your checkout button */
 }
+
+/* STAR RATING */
+.star-rating {
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: center;
+  font-size: 2em;
+  padding: 10px 0;
+}
+
+.star-rating input { display: none; }
+
+.star-rating label {
+  color: #ddd;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.star-rating input:checked ~ label,
+.star-rating label:hover,
+.star-rating label:hover ~ label {
+  color: #ffb400; /* Gold color for selected stars */
+}
+
+/* FEEDBACK BOX */
+textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  resize: none;
+}
+
+/* FILE UPLOAD */
+.file-upload {
+  margin: 15px 0;
+  text-align: left;
+}
+
+.file-label {
+  display: inline-block;
+  padding: 8px 15px;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.file-label input { display: none; }
+
+#file-name-display {
+  font-size: 12px;
+  color: #666;
+  margin-top: 5px;
+}
+.file-label {
+  position: relative; /* Essential for the child input to align */
+  display: inline-block;
+  padding: 10px 20px;
+  background: #f0f0f0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.file-label input[type="file"] {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0; /* Keeps it invisible but makes the whole box clickable */
+  cursor: pointer;
+}
