@@ -42,17 +42,58 @@ body {
   border-radius: 8px;
 }
 
-.food-item {
-  display: grid;
-  grid-template-columns: 30px 70px 1fr auto;
+/* Category Menu Layout */
+.category-menu {
+  display: flex;
+  justify-content: center;
   gap: 10px;
-  align-items: center;
-  margin-bottom: 15px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 10px;
+  margin-bottom: 20px;
+  flex-wrap: wrap; /* Allows buttons to wrap on mobile */
 }
 
-.food-item img { width: 70px; height: 50px; object-fit: cover; border-radius: 4px; }
+.cat-btn {
+  padding: 8px 16px;
+  border: 2px solid #ff8c69;
+  background: white;
+  color: #ff8c69;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.cat-btn.active, .cat-btn:hover {
+  background: #ff8c69;
+  color: white;
+}
+
+/* Food Grid and Item Alignment */
+/* This is the container that holds all food items */
+.food-grid {
+  display: flex;
+  flex-direction: column; /* This forces items to go DOWN instead of SIDEWAYS */
+  gap: 15px; /* Adds space between the rows */
+  width: 100%;
+}
+
+/* This ensures each food item takes up the full width of the container */
+.food-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Keeps image/label on left and price/qty on right */
+  width: 100%;
+  padding: 10px;
+  border-bottom: 1px solid #eee; /* Adds a nice divider line */
+  background: white;
+}
+
+.food-item img {
+  width: 60px;   /* Fixed size so they don't push text away */
+  height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 0 15px;
+}
 
 .price { font-weight: bold; color: #2c7a2c; }
 
@@ -71,9 +112,51 @@ body {
   color: white; cursor: pointer; border-radius: 4px;
 }
 
-.summary { margin-top: 20px; padding: 10px; background: #fffdf9; border-radius: 5px; }
-.payment-section { margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 10px; }
-.payment-option { display: block; margin: 5px 0; font-size: 14px; }
+/* Container for the whole summary area */
+.summary-container {
+  margin-top: 30px;
+  padding: 20px;
+  background: #fffdf5; /* Light cream to look like paper */
+  border: 2px dashed #ff8c69;
+  border-radius: 12px;
+}
+
+/* Individual lines in the summary */
+#summary-list p {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+}
+
+/* Payment area at the bottom */
+.payment-section {
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 2px solid #ff8c69;
+}
+
+.total-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.3em;
+  font-weight: bold;
+  color: #2c7a2c; /* Success green */
+  margin-bottom: 15px;
+}
+
+.service-selection {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.service-selection select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
 
 
 /* Ensure the trigger can reach the options div */

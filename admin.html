@@ -20,8 +20,16 @@
 
 <nav class="navbar">
   <div class="nav-logo">Admin Panel</div>
-  <button onclick="window.location.href='index.html'" class="logout-link">Back to Menu</button>
+  <button onclick="exitAdmin()" class="logout-link">Back to Menu</button>
 </nav>
+
+<script>
+  function exitAdmin() {
+      // Remove the admin "key" before leaving
+      sessionStorage.removeItem("adminAuthenticated");
+      window.location.href = "index.html";
+  }
+</script>
 
 <div class="admin-container">
   <h2>Pending Orders</h2>
@@ -30,21 +38,30 @@
 </div>
 
 <script>
+window.onload = function() {
+    // 1. ADMIN SESSION GATEKEEPER
+    // This checks if we are already logged in for this session
+    let isAuthenticated = sessionStorage.getItem("adminAuthenticated");
 
-    const password = prompt("Enter Admin Password:");
-if (password !== "BEA123") {
-    alert("Access Denied");
-    window.location.href = "index.html";
-}
-  window.onload = function() {
+    if (!isAuthenticated) {
+        const password = prompt("Enter Admin Password:");
+        if (password === "BEA123") {
+            // Save authentication ONLY for this session
+            sessionStorage.setItem("adminAuthenticated", "true");
+        } else {
+            alert("Access Denied");
+            window.location.href = "index.html";
+            return;
+        }
+    }
+
+    // 2. LOAD ORDERS (Your existing logic)
     const orderList = document.getElementById('admin-order-list');
-    
     const name = localStorage.getItem("studentName") || "Unknown User";
     const orderData = JSON.parse(localStorage.getItem("latestOrder"));
     const total = localStorage.getItem("latestTotal");
     const day = localStorage.getItem("selectedOrderDay") || "Today";
-    // NEW: Retrieve Service Time
-    const serviceTime = localStorage.getItem("latestServiceTime") || "Not Specified";
+    const serviceTime = localStorage.getItem("latestServiceTime") || "N/A";
 
     if (orderData && orderData.length > 0) {
       let itemsHtml = orderData.map(item => `<li>${item.qty}x ${item.name}</li>`).join('');
@@ -54,39 +71,37 @@ if (password !== "BEA123") {
           <div class="order-header">
             <div>
               <strong>Student:</strong> ${name} <br>
-              <strong>Day:</strong> ${day} <br>
-              <strong>Service Period:</strong> <span style="text-transform: uppercase; color: #4A90E2; font-weight: bold;">${serviceTime}</span>
+              <strong>Day:</strong> ${day} | <strong>Time:</strong> ${serviceTime}
             </div>
             <span class="status-badge" id="status-text">Pending</span>
           </div>
-          
           <div>
-            <strong>Items Ordered:</strong>
+            <strong>Items:</strong>
             <ul>${itemsHtml}</ul>
-            <p><strong>Amount:</strong> <span style="color:#2c7a2c; font-weight:bold;">${total}</span></p>
+            <p><strong>Total:</strong> <span style="color:#2c7a2c; font-weight:bold;">${total}</span></p>
           </div>
-
           <button class="complete-btn" onclick="markComplete()">MARK AS COMPLETE</button>
         </div>
       `;
     } else {
-      orderList.innerHTML = "<p>No pending orders found.</p>";
+      orderList.innerHTML = "<p>No pending orders.</p>";
     }
+    const paymentInfo = localStorage.getItem("paymentDetails") || "No Payment Info";
+// Add this inside the template string:
+<p><strong>Payment:</strong> ${paymentInfo}</p>
 };
 
-  function markComplete() {
-
+function markComplete() {
     document.getElementById('status-text').innerText = "Completed";
     document.getElementById('status-text').style.background = "#2c7a2c";
     
-    alert("Order marked as complete and cleared from the system.");
+    // Clear order from storage
     localStorage.removeItem("latestOrder");
     localStorage.removeItem("latestTotal");
     
-    location.reload();
-  }
+    alert("Order Completed!");
+    location.reload(); // Reloads page, but won't ask for password because of sessionStorage
+}
 </script>
-
 </body>
-
 </html>

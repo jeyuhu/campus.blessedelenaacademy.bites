@@ -29,13 +29,17 @@
 
 <div class="container">
   <h2>Food Menu</h2>
-  <div style="text-align: center; margin-bottom: 10px;">
-    <span id="current-day-display" style="background: #ff8c69; color: white; padding: 3px 10px; border-radius: 15px; font-size: 12px; font-weight: bold;">
-      Day: Loading...
-    </span>
-  <form action="checkout.html">
+  
+  <div class="category-menu">
+    <button type="button" class="cat-btn active" onclick="filterCategory('all', this)">All</button>
+    <button type="button" class="cat-btn" onclick="filterCategory('meal', this)">Meals</button>
+    <button type="button" class="cat-btn" onclick="filterCategory('drink', this)">Drinks</button>
+    <button type="button" class="cat-btn" onclick="filterCategory('snack', this)">Snacks</button>
+    <button type="button" class="cat-btn" onclick="filterCategory('candy', this)">Candies</button>
+  </div>
 
-    <div class="food-item">
+  <form action="checkout.html">
+  <div class="food-grid"> <div class="food-item" data-category="meal">
       <input type="checkbox" id="adobo">
       <img src="adobo.jpg" alt="Adobo">
       <label for="adobo">Adobo</label>
@@ -46,7 +50,7 @@
       </div>
     </div>
 
-    <div class="food-item">
+    <div class="food-item" data-category="meal">
       <input type="checkbox" id="friedchicken">
       <img src="friedchicken.jpg" alt="Chicken">
       <label for="friedchicken">Fried Chicken</label>
@@ -57,7 +61,7 @@
       </div>
     </div>
 
-    <div class="food-item">
+    <div class="food-item" data-category="meal">
       <input type="checkbox" id="rice">
       <img src="rice.jpg" alt="Rice">
       <label for="rice">Rice</label>
@@ -68,7 +72,7 @@
       </div>
     </div>
 
-<div class="food-item">
+<div class="food-item" data-category="meal">
       <input type="checkbox" id="chaofan">
       <img src="chaofan.jpg" alt="Chaofan">
       <label for="chaofan">Chaofan</label>
@@ -79,7 +83,7 @@
       </div>
     </div>
 
-<div class="food-item">
+<div class="food-item" data-category="meal">
       <input type="checkbox" id="hotdog">
       <img src="hotdog.jpg" alt="Hotdog">
       <label for="hotdog">Hotdog</label>
@@ -90,7 +94,7 @@
       </div>
     </div>
 
-<div class="food-item">
+<div class="food-item" data-category="meal">
       <input type="checkbox" id="maling">
       <img src="maling.jpg" alt="Maling">
       <label for="maling">Maling</label>
@@ -101,7 +105,7 @@
       </div>
     </div>
 
-<div class="food-item">
+<div class="food-item" data-category="meal">
       <input type="checkbox" id="Fried Egg">
       <img src="friedegg.jpg" alt="Fried Egg">
       <label for="friedegg">Fried Egg</label>
@@ -112,13 +116,344 @@
       </div>
     </div>
 
-    <div class="summary">
-      <h3>Your Selection</h3>
-      <div id="summary-list"></div>
-      <div style="display: flex; justify-content: space-between; font-weight: bold; margin-top: 10px; border-top: 1px solid #ddd; padding-top: 10px;">
-        <span>Total:</span>
-        <span id="total-price">₱0.00</span>
+<div class="food-item" data-category="meal">
+      <input type="checkbox" id="bacon">
+      <img src="bacon.jpg" alt="Bacon">
+      <label for="bacon">Bacon</label>
+      <span class="price">₱20.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
       </div>
+    </div>
+
+<div class="food-item" data-category="meal">
+      <input type="checkbox" id="sinigang">
+      <img src="sinigang.jpg" alt="Sinigang">
+      <label for="sinigang">Sinigang</label>
+      <span class="price">₱30.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="meal">
+      <input type="checkbox" id="mechado">
+      <img src="mechado.jpg" alt="Mechado">
+      <label for="mechado">Mechado</label>
+      <span class="price">₱35.00</span>
+      <div class="qty-box">
+        <select><option>1</option><option>2</option><option>3</option></select>      
+      </div>
+    </div>
+
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="siopao">
+      <img src="siapao.jpg" alt="Siopao">
+      <label for="siopao">Siopao</label>
+      <span class="price">₱30.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="siomai">
+      <img src="siomai.jpg" alt="Siomai">
+      <label for="siomai">Siomai</label>
+      <span class="price">₱20.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="brownies">
+      <img src="brownies.jpg" alt="Brownies">
+      <label for="brownies">Brownies</label>
+      <span class="price">₱35.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+ 
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="burger">
+      <img src="burger.jpg" alt="Burger">
+      <label for="burger">Burger</label>
+      <span class="price">₱30.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>    
+
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="presto">
+      <img src="presto.jpg" alt="Presto">
+      <label for="presto">Presto</label>
+      <span class="price">₱10.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="oreo">
+      <img src="oreo.jpg" alt="Oreo">
+      <label for="oreo">Oreo</label>
+      <span class="price">₱10.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>    
+
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="cheezy">
+      <img src="cheezy.jpg" alt="Cheezy">
+      <label for="cheezy">Cheezy</label>
+      <span class="price">₱10.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="cheezyspicy">
+      <img src="cheezyspicy.jpg" alt="Cheezy Spicy">
+      <label for="cheezyspicy">Cheezy Spicy</label>
+      <span class="price">₱10.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>  
+
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="loaded">
+      <img src="loaded.jpg" alt="Loaded">
+      <label for="loaded">Loaded</label>
+      <span class="price">₱10.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="loadedwhite">
+      <img src="loadedwhite.jpg" alt="Loaded White">
+      <label for="loadedwhite">Loaded White</label>
+      <span class="price">₱10.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="piattoscheese">
+      <img src="piattoscheese.jpg" alt="Piattos Cheese">
+      <label for="piattoscheese">Piattos Cheese</label>
+      <span class="price">₱20.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="piattossnc">
+      <img src="piattossnc.jpg" alt="Piattos Sour Cream and Onion">
+      <label for="piattossnc">Piattos Sour Cream and Onion</label>
+      <span class="price">₱20.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="snack">
+      <input type="checkbox" id="vcut">
+      <img src="vcut.jpg" alt="V-Cut">
+      <label for="vcut">V-Cut</label>
+      <span class="price">₱20.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="drink">
+      <input type="checkbox" id="c2">
+      <img src="c2.jpg" alt="C2">
+      <label for="c2">C2</label>
+      <span class="price">₱25.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+    
+<div class="food-item" data-category="drink">
+      <input type="checkbox" id="water">
+      <img src="water350.jpg" alt="Water 350 ML">
+      <label for="water">Water 350 ML</label>
+      <span class="price">₱10.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="drink">
+      <input type="checkbox" id="waterbig">
+      <img src="waterbig.jpg" alt="Water 1000 ML">
+      <label for="waterbig">Water 1000 ML</label>
+      <span class="price">₱20.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="drink">
+      <input type="checkbox" id="mangoz">
+      <img src="mangoz.jpg" alt="Zesto Big Mango">
+      <label for="mangoz">Zesto Big Mango</label>
+      <span class="price">₱25.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="drink">
+      <input type="checkbox" id="applez">
+      <img src="applez.jpg" alt="Zesto Big Apple">
+      <label for="applez">Zesto Big Apple</label>
+      <span class="price">₱25.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="drink">
+      <input type="checkbox" id="orangez">
+      <img src="orangez.jpg" alt="Zesto Big Orange">
+      <label for="orangez">Zesto Big Orange</label>
+      <span class="price">₱25.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="drink">
+      <input type="checkbox" id="chuckie">
+      <img src="chuckie.jpg" alt="Chuckie">
+      <label for="chuckie">Chuckie</label>
+      <span class="price">₱20.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="candy">
+      <input type="checkbox" id="mentos">
+      <img src="mentos.jpg" alt="Mentos">
+      <label for="mentos">Mentos</label>
+      <span class="price">₱2.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="candy">
+      <input type="checkbox" id="maxxred">
+      <img src="maxxred.jpg" alt="Maxx Cherry">
+      <label for="maxxred">Maxx Cherry</label>
+      <span class="price">₱2.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="candy">
+      <input type="checkbox" id="maxxyellow">
+      <img src="maxxyellow.jpg" alt="Maxx Lemon">
+      <label for="maxxyellow">Maxx Lemon</label>
+      <span class="price">₱2.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="candy">
+      <input type="checkbox" id="maxxorange">
+      <img src="maxxorange.jpg" alt="Maxx Orange">
+      <label for="maxxorange">Maxx Orange</label>
+      <span class="price">₱2.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="candy">
+      <input type="checkbox" id="frooty">
+      <img src="frooty.jpg" alt="Frooty Lollipops">
+      <label for="frooty">Frooty Lollipops</label>
+      <span class="price">₱5.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="candy">
+      <input type="checkbox" id="choko">
+      <img src="choko.jpg" alt="Choko-Choko">
+      <label for="choko">Choko-Choko</label>
+      <span class="price">₱2.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </div>
+    </div>
+
+<div class="food-item" data-category="candy">
+      <input type="checkbox" id="vfresh">
+      <img src="vfresh.jpg" alt="VFresh">
+      <label for="vfresh">VFresh</label>
+      <span class="price">₱3.00</span>
+      <div class="qty-box">
+        <label>Qty:</label>
+        <select><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select>
+      </div>
+    </div>
+
+    <div class="summary-container">
+  <h3>Order Summary</h3>
+  <div id="summary-list">
+    </div>
+  
+  <div class="payment-section">
+    <div class="total-row">
+      <span>Total Amount:</span>
+      <span id="total-price">₱0.00</span>
     </div>
 
   <div class="payment-section">
@@ -149,64 +484,38 @@
 </div>    
 
 
-<div class="service-selection" style="margin-top: 20px; padding: 10px; background: #f0f7ff; border-radius: 5px; border: 1px solid #d0e3ff;">
-  <h3 style="font-size: 16px; margin-bottom: 8px;">Service Time</h3>
-  <p style="font-size: 13px; color: #555; margin-bottom: 10px;">When would you like this order to be served?</p>
-  
-  <select name="service_time" required style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ccc;">
-    <option value="" disabled selected>Select Service Time...</option>
-    <option value="recess">Recess Time</option>
-    <option value="lunch">Lunch Time</option>
-  </select>
-</div>
+<div class="service-selection">
+      <label>Service Time:</label>
+      <select name="service_time">
+        <option value="Recess">Recess</option>
+        <option value="Lunch">Lunch</option>
+      </select>
+    </div>
 
 </div>
 
-    <button type="submit" class="checkout-btn">CHECK OUT</button>
+    <button type="submit" class="checkout-btn">PROCEED TO PAY</button>
+  </div>
   </form>
 </div>
 
 <script>
-
-  window.addEventListener('load', function() {
+window.onload = function() {
+    // 1. GATEKEEPER & NAME DISPLAY
     const name = localStorage.getItem("studentName");
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
-    const displayName = document.getElementById("display-name");
-
-    if (!isLoggedIn && !window.location.href.includes("login.html")) {
+    if (!localStorage.getItem("isLoggedIn")) {
         window.location.href = "login.html";
+        return;
     }
+    document.getElementById("display-name").innerText = name || "Student";
 
-    if (displayName && name) {
-        displayName.innerText = name;
-    }
-});
+    sessionStorage.removeItem("adminAuthenticated");
 
-// 2. Universal Logout Function
-function logout() {
-    localStorage.clear();
-    window.location.href = "login.html";
-}
-  // Login Gatekeeper
-  window.onload = function() {
-    
-    const loggedIn = localStorage.getItem("isLoggedIn");
-
-    
-    if (!loggedIn) {
-        window.location.href = "login.html";
-    } else {
-   
-        const name = localStorage.getItem("studentName");
-        document.getElementById("display-name").innerText = name || "Student";
-    }
-};
-  // 2. PRICE CALCULATOR LOGIC
+    // 2. RESTORE PRICE CALCULATOR
     const form = document.querySelector('form');
     const summaryList = document.getElementById('summary-list');
     const totalPriceDisplay = document.getElementById('total-price');
 
-    
     form.addEventListener('input', () => {
         let total = 0;
         summaryList.innerHTML = "";
@@ -215,7 +524,7 @@ function logout() {
             const checkbox = item.querySelector('input[type="checkbox"]');
             const select = item.querySelector('select');
             
-            if (checkbox.checked) {
+            if (checkbox && checkbox.checked) {
                 const foodName = item.querySelector('label').innerText;
                 const priceText = item.querySelector('.price').innerText;
                 const price = parseFloat(priceText.replace('₱', ''));
@@ -224,7 +533,7 @@ function logout() {
                 
                 total += itemTotal;
 
-                
+                // Update the summary list
                 summaryList.innerHTML += `
                     <p style="font-size:14px; margin:5px 0;">
                         • ${foodName} x${qty} 
@@ -234,17 +543,69 @@ function logout() {
         });
         totalPriceDisplay.innerText = `₱${total.toFixed(2)}`;
     });
-  function logout() {
+
+    // 3. SAVE DATA ON SUBMIT
+    form.addEventListener('submit', (e) => {
+        let orderedItems = [];
+        document.querySelectorAll('.food-item').forEach(item => {
+            const checkbox = item.querySelector('input[type="checkbox"]');
+            if (checkbox && checkbox.checked) {
+                orderedItems.push({
+                    name: item.querySelector('label').innerText,
+                    qty: item.querySelector('select').value,
+                    price: item.querySelector('.price').innerText
+                });
+            }
+        });
+        
+        if (orderedItems.length === 0) {
+            e.preventDefault();
+            alert("Please select at least one item!");
+            return;
+        }
+
+        localStorage.setItem("latestOrder", JSON.stringify(orderedItems));
+        localStorage.setItem("latestTotal", totalPriceDisplay.innerText);
+    });
+};
+
+// 4. CATEGORY FILTER (Fixes the layout "mess")
+function filterCategory(category, btn) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    const items = document.querySelectorAll('.food-item');
+    items.forEach(item => {
+        if (category === 'all' || item.getAttribute('data-category') === category) {
+            item.style.display = 'flex'; // Use flex to keep images and labels aligned
+        } else {
+            item.style.display = 'none';
+        }
+    });
+}
+
+function logout() {
     localStorage.clear();
     window.location.href = "login.html";
-  }
+}
+
+// Function to show/hide the online payment fields
+function togglePaymentForm(show) {
+    const details = document.getElementById('online-details');
+    details.style.display = show ? 'block' : 'none';
+}
+
+// Update your existing Form Submit Listener
 const orderForm = document.querySelector('form');
-orderForm.addEventListener('submit', () => {
+orderForm.addEventListener('submit', (e) => {
+    const isOnline = document.getElementById('pay_online').checked;
+    const refNum = document.getElementById('ref_number').value;
+    const accName = document.getElementById('account_name').value;
+    
+    // 1. Check if food is selected (your existing check)
     let orderedItems = [];
-    let total = document.getElementById('total-price').innerText;
-    let serviceTime = document.querySelector('select[name="service_time"]').value;
     document.querySelectorAll('.food-item').forEach(item => {
-        const checkbox = item.querySelector('input[type="checkbox"]'); // Fixed line
+        const checkbox = item.querySelector('input[type="checkbox"]');
         if (checkbox && checkbox.checked) {
             orderedItems.push({
                 name: item.querySelector('label').innerText,
@@ -254,26 +615,33 @@ orderForm.addEventListener('submit', () => {
         }
     });
 
-    localStorage.setItem("latestOrder", JSON.stringify(orderedItems));
-    localStorage.setItem("latestTotal", total);
-    localStorage.setItem("latestServiceTime", serviceTime);
-});
-window.onload = function() {
-    const name = localStorage.getItem("studentName");
-    if (!localStorage.getItem("isLoggedIn")) {
-        window.location.href = "login.html";
-    } else if (document.getElementById("display-name")) {
-        document.getElementById("display-name").innerText = name;
+    if (orderedItems.length === 0) {
+        e.preventDefault();
+        alert("Please select at least one item!");
+        return;
     }
-};
-function logout() {
-    localStorage.clear();
-    window.location.href = "login.html";
-}
+
+    // 2. NEW: Payment Validation
+    if (isOnline) {
+        if (!refNum || !accName) {
+            e.preventDefault(); // Stop checkout
+            alert("Please fill in your Online Payment details (Reference Number & Name)!");
+            return;
+        }
+        // Save payment info to storage if valid
+        localStorage.setItem("paymentDetails", `Ref: ${refNum} | Name: ${accName}`);
+    } else {
+        localStorage.setItem("paymentDetails", "Paid via Cash");
+    }
+
+    // 3. Save Order and Continue
+    localStorage.setItem("latestOrder", JSON.stringify(orderedItems));
+    localStorage.setItem("latestTotal", document.getElementById('total-price').innerText);
+    localStorage.setItem("paymentMethod", isOnline ? "Online" : "Cash");
+});
 </script>
 </body>
 <footer style="text-align: center; padding: 20px; opacity: 0.5;">
   <a href="admin.html" style="font-size: 10px; color: #666; text-decoration: none;">Admin Login</a>
 </footer>
-
 </html>

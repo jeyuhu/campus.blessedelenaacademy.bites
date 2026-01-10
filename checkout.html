@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">	
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Order Complete</title>
 	<link rel="icon" type="image/png" href="bealogo.png">
 <link rel="stylesheet" href="style.css">
@@ -55,7 +55,7 @@
   <p style="font-size: 14px; color: #666; margin-bottom: 15px;">We'd love to hear your feedback!</p>
   
   <button onclick="window.location.href='reviewpage.html'" class="checkout-btn" style="background: #4A90E2;">
-    RATE ORDER
+    REVIEW ORDER
   </button>
   
   <p style="margin-top: 20px;">
@@ -70,6 +70,8 @@ window.onload = function() {
     const isLoggedIn = localStorage.getItem("isLoggedIn");
     const orderData = JSON.parse(localStorage.getItem("latestOrder")) || [];
     const totalData = localStorage.getItem("latestTotal") || "₱0.00";
+
+sessionStorage.removeItem("adminAuthenticated");
 
     // 2. GATEKEEPER
     if (!isLoggedIn) {
@@ -106,6 +108,4 @@ function logout() {
 <footer style="text-align: center; padding: 20px; opacity: 0.5;">
   <a href="admin.html" style="font-size: 10px; color: #666; text-decoration: none;">Admin Login</a>
 </footer>
-
 </html>
-
